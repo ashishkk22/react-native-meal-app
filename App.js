@@ -9,6 +9,7 @@ import MealDetailScreen from "./screens/MealDetailScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import FavoritesScreen from "./screens/FavoritesScreen";
 import { Ionicons } from "@expo/vector-icons";
+import FavoritesContextProvider from "./store/context/favorites-context";
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 function DrawerNavigation() {
@@ -51,50 +52,52 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: { backgroundColor: "#351401" },
-            headerTintColor: "white",
-            contentStyle: { backgroundColor: "#3f2f25" },
-          }}
-        >
-          {/* here the first registered screen is MealsCategories so here the first screen is going to load is meals categories so here we can say that here order of the registry is going to be matter */}
-          <Stack.Screen
-            name="Drawer"
-            // component={CategoriesScreen}
-            component={DrawerNavigation}
-            options={{
-              // title: "All Categories",
-              headerShown: false, //to remove the header
-              // headerStyle: { backgroundColor: "#351401" },
-              // headerTintColor: "white",
-              // contentStyle: { backgroundColor: "#3f2f25" },
-              //if we have to apply all the above options on the all screens then we have to add it in the navigator
+      <FavoritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: { backgroundColor: "#351401" },
+              headerTintColor: "white",
+              contentStyle: { backgroundColor: "#3f2f25" },
             }}
-          />
-          <Stack.Screen
-            name="MealsOverview"
-            component={MealsOverviewScreen}
-            // options={({ route, navigation }) => {
-            //   const catId = route.params.categoryId;
-            //   return {
-            //     title: catId,
-            //   };
-            // }}
-          />
-          <Stack.Screen
-            name="MealDetail"
-            component={MealDetailScreen}
-            options={{ title: "About the meal" }}
-            // options={{
-            //   headerRight: () => {
-            //     return <Button title="Tap Me !" onPress={} />;
-            //   },
-            // }} but if we have to interact with the meadDetailScreen then we have to set the options in the component it self
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+          >
+            {/* here the first registered screen is MealsCategories so here the first screen is going to load is meals categories so here we can say that here order of the registry is going to be matter */}
+            <Stack.Screen
+              name="Drawer"
+              // component={CategoriesScreen}
+              component={DrawerNavigation}
+              options={{
+                // title: "All Categories",
+                headerShown: false, //to remove the header
+                // headerStyle: { backgroundColor: "#351401" },
+                // headerTintColor: "white",
+                // contentStyle: { backgroundColor: "#3f2f25" },
+                //if we have to apply all the above options on the all screens then we have to add it in the navigator
+              }}
+            />
+            <Stack.Screen
+              name="MealsOverview"
+              component={MealsOverviewScreen}
+              // options={({ route, navigation }) => {
+              //   const catId = route.params.categoryId;
+              //   return {
+              //     title: catId,
+              //   };
+              // }}
+            />
+            <Stack.Screen
+              name="MealDetail"
+              component={MealDetailScreen}
+              options={{ title: "About the meal" }}
+              // options={{
+              //   headerRight: () => {
+              //     return <Button title="Tap Me !" onPress={} />;
+              //   },
+              // }} but if we have to interact with the meadDetailScreen then we have to set the options in the component it self
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </FavoritesContextProvider>
     </>
   );
 }
